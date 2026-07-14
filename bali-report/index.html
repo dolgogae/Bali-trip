@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>발리 짱구 · 스미냑 여행 리포트</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="antialiased">
+
+  <!-- ================= header ================= -->
+  <header class="max-w-6xl mx-auto px-5 pt-12 pb-8">
+    <p class="text-xs font-semibold tracking-widest uppercase" style="color:var(--accent-canggu-text)">Bali Travel Report · 2026.07</p>
+    <h1 class="text-3xl md:text-4xl font-bold mt-2 tracking-tight" style="color:var(--ink-1)">
+      발리 <span style="color:var(--accent-canggu-text)">짱구</span> · <span style="color:var(--accent-seminyak-text)">스미냑</span> 어디 갈까?
+    </h1>
+    <p class="mt-3 text-sm md:text-base leading-relaxed max-w-3xl" style="color:var(--ink-2)">
+      인스타그램 수집 데이터 10만 건의 지역별 분석과 2026년 7월 웹 리서치를 바탕으로,
+      여행지 · 서핑캠프 · 러닝클럽 · 웰니스 4개 카테고리에서 가볼 만한 곳을 추천합니다.
+    </p>
+    <div class="flex flex-wrap gap-2 mt-4">
+      <span class="chip">📊 게시물 100,000건</span>
+      <span class="chip">🗓 데이터 기간 2025.07 – 2026.07</span>
+      <span class="chip">🔎 웹 리서치 2026.07.14</span>
+    </div>
+    <nav class="anchor-nav flex flex-wrap gap-5 mt-6 text-sm font-medium border-t pt-4" style="border-color:var(--border)">
+      <a href="#picks">⭐ 최종 추천</a>
+      <a href="#cities">🏆 도시 TOP 5</a>
+      <a href="#map">🗺 지도</a>
+      <a href="#detail">🗂 카테고리별 상세</a>
+      <a href="#hidden">🤫 나만 알고 싶은</a>
+      <a href="#data">📈 데이터 분석</a>
+    </nav>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-5 pb-20 space-y-14">
+
+    <!-- ================= final picks ================= -->
+    <section id="picks">
+      <h2 class="text-xl font-bold" style="color:var(--ink-1)">⭐ 최종 추천 한눈에 보기</h2>
+      <p class="text-sm mt-1" style="color:var(--ink-3)">카테고리별 톱픽 — 상세 근거와 대안은 아래 카테고리별 상세에서 확인하세요.</p>
+      <div id="picks-grid" class="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mt-5"></div>
+    </section>
+
+    <!-- ================= city top 5 ================= -->
+    <section id="cities">
+      <h2 class="text-xl font-bold" style="color:var(--ink-1)">🏆 발리 도시 TOP 5</h2>
+      <p class="text-sm mt-1" style="color:var(--ink-3)">
+        데이터셋의 7개 지역 중 2026년 7월 웹 리서치 종합으로 선정 —
+        <span id="cities-criteria"></span>
+      </p>
+      <div id="cities-grid" class="grid md:grid-cols-2 gap-4 mt-5"></div>
+      <p id="cities-excluded" class="text-xs mt-4 leading-relaxed" style="color:var(--ink-3)"></p>
+    </section>
+
+    <!-- ================= map ================= -->
+    <section id="map">
+      <h2 class="text-xl font-bold" style="color:var(--ink-1)">🗺 추천지 지도</h2>
+      <p class="text-sm mt-1" style="color:var(--ink-3)">
+        OpenStreetMap 기반 렌더링 (구글맵 JS API는 API 키 필요) — 점을 클릭하면 구글지도 · 인스타그램으로 연결됩니다.
+        칩을 눌러 카테고리를 켜고 끌 수 있습니다.
+      </p>
+      <div id="map-chips" class="flex flex-wrap items-center gap-2 mt-4"></div>
+      <div class="card mt-3 overflow-hidden">
+        <div id="map-canvas" style="height:440px"></div>
+      </div>
+      <p id="map-count" class="text-xs mt-2" style="color:var(--ink-3)"></p>
+    </section>
+
+    <!-- ================= venue detail ================= -->
+    <section id="detail">
+      <h2 class="text-xl font-bold" style="color:var(--ink-1)">🗂 카테고리별 추천 상세</h2>
+      <p class="text-sm mt-1" style="color:var(--ink-3)">2026년 7월 기준 웹 리서치 — 각 카드의 출처 링크에서 원문을 확인할 수 있습니다.
+        가격(💰)은 <strong>7~8월 성수기 대략 범위, USD 기준</strong>(1 USD ≈ 16,000 IDR 환산)이며 시즌 · 좌석 · 환율에 따라 달라질 수 있습니다.</p>
+
+      <!-- one filter row, above everything it scopes -->
+      <div class="flex flex-wrap items-center gap-2 mt-5" id="cat-tabs" role="tablist" aria-label="카테고리"></div>
+      <div class="flex flex-wrap items-center gap-2 mt-3" id="area-chips" role="group" aria-label="지역 필터"></div>
+
+      <div class="card p-5 mt-5">
+        <p id="scene-summary" class="text-sm leading-relaxed" style="color:var(--ink-2)"></p>
+      </div>
+      <p id="venue-count" class="text-xs mt-4" style="color:var(--ink-3)"></p>
+      <div id="venue-grid" class="mt-3"></div>
+    </section>
+
+    <!-- ================= hidden gems ================= -->
+    <section id="hidden">
+      <details class="section-fold">
+      <summary class="flex items-start gap-2">
+        <span class="fold-arrow">▸</span>
+        <div>
+          <h2 class="text-xl font-bold" style="color:var(--ink-1)">🤫 나만 알고 싶은 곳</h2>
+      <p class="text-sm mt-1" style="color:var(--ink-3)">
+        도시가 아니라 <strong>가게 · 해변 · 웰니스 같은 스팟 단위</strong>의 숨은 명소입니다 —
+        먼저 데이터에서 "저빈도 · 고반응" 신호를 찾아보고(아래 검증), 실제 스팟은 로컬 · 장기체류자 중심 웹 리서치로 발굴했습니다.
+          </p>
+          <p class="fold-hint mt-1">▾ 클릭해서 펼치기</p>
+        </div>
+      </summary>
+      <div class="fold-body">
+
+      <div class="grid lg:grid-cols-5 gap-5 mt-5">
+        <div class="card p-5 lg:col-span-3">
+          <figure class="chart-figure">
+            <figcaption class="flex flex-wrap items-baseline justify-between gap-2 mb-3">
+              <div>
+                <h3 class="text-sm font-semibold" style="color:var(--ink-1)">데이터 신호 탐색: 빈도 vs 반응</h3>
+                <p class="text-xs mt-0.5" style="color:var(--ink-3)">7개 지역 모두 한 덩어리(게시물 격차 2.1% · 반응 격차 1.6%) → 이 데이터에선 히든젬 신호 없음</p>
+              </div>
+              <div class="legend">
+                <span class="key"><span class="swatch-rect" style="background:var(--c-canggu)"></span>짱구</span>
+                <span class="key"><span class="swatch-rect" style="background:var(--c-seminyak)"></span>스미냑</span>
+                <span class="key"><span class="swatch-rect" style="background:var(--ink-3)"></span>기타</span>
+              </div>
+            </figcaption>
+            <div id="chart-hidden"></div>
+          </figure>
+        </div>
+        <div class="card p-5 lg:col-span-2">
+          <h3 class="text-sm font-semibold" style="color:var(--ink-1)">왜 데이터로는 못 찾았나</h3>
+          <p class="text-[13px] leading-relaxed mt-2" style="color:var(--ink-2)">
+            히든젬은 보통 <strong>"언급은 적은데 반응이 유난히 좋은 곳"</strong>(산점도 왼쪽 위)으로 잡아냅니다.
+            그런데 이 데이터셋에서 장소를 담는 필드는 7개 지역명이 전부이고, 그마저 전 지역이 중앙에 몰려 있어
+            (격차 1~2% = 노이즈) 존에 <strong>유의미하게</strong> 들어오는 지역이 없습니다.
+            스팟 단위 신호도 없습니다 — 캡션 10만 개가 전부 동일 템플릿이고, 해시태그도
+            <strong>#bali #짱구 #발리여행 같은 범용 태그 10종이 전부</strong>인 데다 지역과 무관하게 무작위로 붙어
+            (#짱구 태그가 가장 많이 달린 지역이 정작 누사페니다) 가게 · 스팟 이름을 캘 수 없습니다.
+          </p>
+          <p class="text-[13px] leading-relaxed mt-2" style="color:var(--ink-2)">
+            그래서 아래 히든젬 목록은 <strong>"투어버스가 못 들어가는 좁은 진입로", "유명지 대비 리뷰 수 1/10",
+            "장기체류자 커뮤니티 위주로 공유"</strong> 같은 실제 저노출 근거를 웹 리서치로 교차 확인해 선정했고,
+            각 카드에 그 이유를 표기했습니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="card p-5 mt-5">
+        <h3 class="text-sm font-semibold" style="color:var(--ink-1)">이미 추천한 곳 중에서도 "히든" 성향인 스팟</h3>
+        <p class="text-xs mt-0.5" style="color:var(--ink-3)">위 카테고리별 추천 53곳 중, 품질 대비 노출이 유난히 적은 곳 — 근거는 각 리서치 출처 기준</p>
+        <div id="hidden-in-recs" class="mt-3 space-y-2"></div>
+      </div>
+
+      <h3 class="text-sm font-semibold mt-6" style="color:var(--ink-1)">웹 리서치로 발굴한 히든 스팟</h3>
+      <div class="card p-5 mt-3">
+        <p id="hidden-scene" class="text-sm leading-relaxed" style="color:var(--ink-2)"></p>
+      </div>
+      <div id="hidden-grid" class="grid md:grid-cols-2 gap-4 mt-5"></div>
+      </div>
+      </details>
+    </section>
+
+    <!-- ================= data analysis ================= -->
+    <section id="data">
+      <details class="section-fold">
+      <summary class="flex items-start gap-2">
+        <span class="fold-arrow">▸</span>
+        <div>
+          <h2 class="text-xl font-bold" style="color:var(--ink-1)">📈 데이터 분석</h2>
+          <p class="text-sm mt-1" style="color:var(--ink-3)">샘플 데이터 10만 건의 구조 · 규모 참고용 차트 (짱구 · 스미냑 중심)</p>
+          <p class="fold-hint mt-1">▾ 클릭해서 펼치기</p>
+        </div>
+      </summary>
+      <div class="fold-body">
+      <div class="status-note text-[13px] leading-relaxed px-4 py-3 rounded mt-3" style="color:var(--ink-2)">
+        ⚠️ 검증 결과 본 데이터셋(10만 건)은 캡션·수치가 자동 생성된 <strong>샘플 데이터</strong>입니다
+        (전 지역 반응도가 균일하고 캡션이 동일 템플릿). 아래 차트는 데이터 구조와 규모 파악용 참고 자료이며,
+        <strong>장소 추천은 위의 웹 리서치 결과를 근거</strong>로 합니다.
+      </div>
+
+      <div id="kpi-row" class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6"></div>
+
+      <div class="grid lg:grid-cols-2 gap-5 mt-5">
+
+        <div class="card p-5">
+          <figure class="chart-figure">
+            <figcaption class="flex flex-wrap items-baseline justify-between gap-2 mb-4">
+              <div>
+                <h3 class="text-sm font-semibold" style="color:var(--ink-1)">지역별 게시물 수</h3>
+                <p class="text-xs mt-0.5" style="color:var(--ink-3)">짱구 · 스미냑 강조, 나머지 지역은 맥락</p>
+              </div>
+              <div class="legend">
+                <span class="key"><span class="swatch-rect" style="background:var(--c-canggu)"></span>짱구</span>
+                <span class="key"><span class="swatch-rect" style="background:var(--c-seminyak)"></span>스미냑</span>
+                <span class="key"><span class="swatch-rect" style="background:var(--deemph)"></span>기타 지역</span>
+              </div>
+            </figcaption>
+            <div id="chart-loc"></div>
+          </figure>
+        </div>
+
+        <div class="card p-5">
+          <figure class="chart-figure">
+            <figcaption class="flex flex-wrap items-baseline justify-between gap-2 mb-4">
+              <div>
+                <h3 class="text-sm font-semibold" style="color:var(--ink-1)">월별 게시물 추이</h3>
+                <p class="text-xs mt-0.5" style="color:var(--ink-3)"><span id="monthly-note"></span> · 변동 폭 ±8% 수준의 노이즈</p>
+              </div>
+              <div class="legend">
+                <span class="key"><span class="swatch-line" style="background:var(--c-canggu)"></span>짱구</span>
+                <span class="key"><span class="swatch-line" style="background:var(--c-seminyak)"></span>스미냑</span>
+              </div>
+            </figcaption>
+            <div id="chart-monthly"></div>
+          </figure>
+        </div>
+
+        <div class="card p-5">
+          <figure class="chart-figure">
+            <figcaption class="flex flex-wrap items-baseline justify-between gap-2 mb-4">
+              <div>
+                <h3 class="text-sm font-semibold" style="color:var(--ink-1)">미디어 타입 구성비</h3>
+                <p class="text-xs mt-0.5" style="color:var(--ink-3)">이미지 · 영상 · 캐러셀이 균등한 3분할</p>
+              </div>
+              <div class="legend">
+                <span class="key"><span class="swatch-rect" style="background:var(--c-image)"></span>이미지</span>
+                <span class="key"><span class="swatch-rect" style="background:var(--c-video)"></span>영상</span>
+                <span class="key"><span class="swatch-rect" style="background:var(--c-carousel)"></span>캐러셀</span>
+              </div>
+            </figcaption>
+            <div id="chart-media" class="mt-2"></div>
+          </figure>
+        </div>
+
+        <div class="card p-5">
+          <h3 class="text-sm font-semibold" style="color:var(--ink-1)">짱구 vs 스미냑 지표 비교</h3>
+          <p class="text-xs mt-0.5 mb-3" style="color:var(--ink-3)">두 지역의 반응도 차이는 1% 미만 — 사실상 동일</p>
+          <table class="w-full text-[13px]">
+            <thead>
+              <tr class="text-xs" style="color:var(--ink-3)">
+                <th class="text-left font-medium py-2 pr-3" style="border-bottom:1px solid var(--grid)">지표</th>
+                <th class="text-right font-medium py-2 px-3" style="border-bottom:1px solid var(--grid)">
+                  <span class="inline-block w-2 h-2 rounded-full align-middle mr-1" style="background:var(--c-canggu)"></span>짱구
+                </th>
+                <th class="text-right font-medium py-2 px-3" style="border-bottom:1px solid var(--grid)">
+                  <span class="inline-block w-2 h-2 rounded-full align-middle mr-1" style="background:var(--c-seminyak)"></span>스미냑
+                </th>
+              </tr>
+            </thead>
+            <tbody id="compare-body"></tbody>
+          </table>
+        </div>
+
+        <div class="card p-5">
+          <figure class="chart-figure">
+            <figcaption class="mb-4">
+              <h3 class="text-sm font-semibold" style="color:var(--ink-1)">짱구 게시물 해시태그 TOP 6</h3>
+              <p class="text-xs mt-0.5" style="color:var(--ink-3)">한국어 · 영어 태그 혼합, 출현 빈도는 균등 분포</p>
+            </figcaption>
+            <div id="chart-tags-canggu"></div>
+          </figure>
+        </div>
+
+        <div class="card p-5">
+          <figure class="chart-figure">
+            <figcaption class="mb-4">
+              <h3 class="text-sm font-semibold" style="color:var(--ink-1)">스미냑 게시물 해시태그 TOP 6</h3>
+              <p class="text-xs mt-0.5" style="color:var(--ink-3)">태그가 지역과 무관하게 부여됨 — 샘플 데이터의 한계</p>
+            </figcaption>
+            <div id="chart-tags-seminyak"></div>
+          </figure>
+        </div>
+
+      </div>
+      </div>
+      </details>
+    </section>
+  </main>
+
+  <!-- ================= footer ================= -->
+  <footer class="border-t" style="border-color:var(--border)">
+    <div class="max-w-6xl mx-auto px-5 py-8 text-xs leading-relaxed" style="color:var(--ink-3)">
+      <p>데이터: bali_full_data_100k.json (샘플 데이터 10만 건) · 장소 정보: 2026-07-14 웹 리서치 (각 카드의 출처 링크 참조)</p>
+      <p class="mt-1">가격 · 운영시간 · 스케줄은 현지 사정에 따라 변동될 수 있으니 방문 전 공식 채널을 확인하세요.</p>
+      <p class="mt-1">HTML · CSS · JavaScript · Tailwind CSS로 제작 · Generated with Claude Code</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/charts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

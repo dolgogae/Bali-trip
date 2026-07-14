@@ -1,0 +1,176 @@
+/* ---- design tokens (validated palette — see dataviz reference instance) ---- */
+:root {
+  --surface-1: #fcfcfb;      /* chart surface */
+  --page: #f9f9f7;           /* page plane */
+  --ink-1: #0b0b0b;          /* primary ink */
+  --ink-2: #52514e;          /* secondary ink */
+  --ink-3: #898781;          /* muted (axis/labels) */
+  --grid: #e1e0d9;           /* hairline gridline */
+  --baseline: #c3c2b7;       /* axis baseline */
+  --border: rgba(11, 11, 11, 0.10);
+  --deemph: #c3c2b7;         /* de-emphasis bars (context locations) */
+
+  --c-canggu: #2a78d6;       /* slot 1 blue  = 짱구 */
+  --c-seminyak: #1baf7a;     /* slot 2 aqua  = 스미냑 */
+  --c-image: #eda100;        /* slot 3 yellow = 이미지 */
+  --c-video: #008300;        /* slot 4 green  = 영상 */
+  --c-carousel: #4a3aa7;     /* slot 5 violet = 캐러셀 */
+
+  --warn-bg: #fff7e8;
+  --warn-border: #eda100;
+
+  /* text-accent variants — darker than the mark colors so headings clear WCAG on light */
+  --accent-canggu-text: #1c5cab;
+  --accent-seminyak-text: #0d7a54;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-1: #1a1a19;
+    --page: #0d0d0d;
+    --ink-1: #ffffff;
+    --ink-2: #c3c2b7;
+    --ink-3: #898781;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --deemph: #383835;
+
+    --c-canggu: #3987e5;
+    --c-seminyak: #199e70;
+    --c-image: #c98500;
+    --c-video: #008300;
+    --c-carousel: #9085e9;
+
+    --warn-bg: #2a2416;
+    --warn-border: #c98500;
+
+    --accent-canggu-text: #5598e7;
+    --accent-seminyak-text: #2cc98f;
+  }
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--page);
+  color: var(--ink-1);
+  font-family: system-ui, -apple-system, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+}
+
+/* ---- cards ---- */
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* ---- chart chrome ---- */
+.chart-figure { margin: 0; }
+.chart-figure svg { display: block; width: 100%; height: auto; }
+.chart-figure text {
+  font-family: inherit;
+  fill: var(--ink-3);
+  font-size: 11px;
+}
+.chart-figure .tick-label { font-variant-numeric: tabular-nums; }
+.chart-figure .grid-line { stroke: var(--grid); stroke-width: 1; }
+.chart-figure .axis-line { stroke: var(--baseline); stroke-width: 1; }
+.chart-figure .direct-label { fill: var(--ink-2); font-weight: 600; font-size: 11px; }
+.chart-figure .series-line { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.chart-figure .end-dot { stroke: var(--surface-1); stroke-width: 2; }
+.chart-figure .bar { transition: filter 120ms ease; }
+.chart-figure .bar.is-hover { filter: brightness(1.08); }
+.chart-figure .hit { fill: transparent; cursor: default; }
+.chart-figure .crosshair { stroke: var(--baseline); stroke-width: 1; }
+
+/* legend (line keys / swatches) */
+.legend { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.legend .key { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-2); }
+.legend .key .swatch-line { width: 14px; height: 2px; border-radius: 1px; }
+.legend .key .swatch-rect { width: 10px; height: 10px; border-radius: 3px; }
+
+/* ---- tooltip ---- */
+#viz-tooltip {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  padding: 8px 10px;
+  font-size: 12px;
+  color: var(--ink-2);
+  min-width: 120px;
+  opacity: 0;
+  transition: opacity 90ms ease;
+}
+#viz-tooltip.show { opacity: 1; }
+#viz-tooltip .tt-title { color: var(--ink-3); font-size: 11px; margin-bottom: 4px; }
+#viz-tooltip .tt-row { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+#viz-tooltip .tt-key { width: 12px; height: 2px; border-radius: 1px; flex: none; }
+#viz-tooltip .tt-val { color: var(--ink-1); font-weight: 700; font-variant-numeric: tabular-nums; }
+#viz-tooltip .tt-name { color: var(--ink-2); }
+
+/* ---- table view twin ---- */
+.chart-table summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--ink-3);
+  user-select: none;
+  margin-top: 10px;
+}
+.chart-table summary:hover { color: var(--ink-2); }
+.chart-table table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+.chart-table th {
+  text-align: left; color: var(--ink-3); font-weight: 500;
+  border-bottom: 1px solid var(--grid); padding: 5px 8px;
+}
+.chart-table td {
+  color: var(--ink-2); border-bottom: 1px solid var(--grid);
+  padding: 5px 8px; font-variant-numeric: tabular-nums;
+}
+.chart-table td:first-child { font-variant-numeric: normal; }
+
+/* ---- stat tiles ---- */
+.stat-value { font-weight: 600; font-size: 28px; color: var(--ink-1); letter-spacing: -0.01em; }
+.stat-label { font-size: 12px; color: var(--ink-3); }
+.stat-sub { font-size: 12px; color: var(--ink-2); }
+
+/* ---- venue cards ---- */
+.chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; padding: 2px 8px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--ink-2);
+}
+.chip .dot { width: 7px; height: 7px; border-radius: 999px; }
+.tab-btn, .filter-btn {
+  font-size: 13px; padding: 6px 14px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--ink-2);
+  background: transparent; cursor: pointer; transition: all 120ms ease;
+}
+.tab-btn:hover, .filter-btn:hover { background: var(--grid); }
+.tab-btn.active { background: var(--ink-1); color: var(--page); border-color: var(--ink-1); font-weight: 600; }
+.filter-btn.active { border-color: var(--ink-1); color: var(--ink-1); font-weight: 600; }
+.status-note { background: var(--warn-bg); border-left: 3px solid var(--warn-border); }
+.top-pick-ring { box-shadow: 0 0 0 2px var(--c-canggu); }
+
+.src-link { color: var(--ink-3); text-decoration: none; border-bottom: 1px dotted var(--ink-3); }
+.src-link:hover { color: var(--ink-2); }
+
+.anchor-nav a { color: var(--ink-2); }
+.anchor-nav a:hover { color: var(--ink-1); }
+
+/* ---- collapsible sections (나만 알고 싶은 곳 · 데이터 분석) ---- */
+.section-fold > summary { cursor: pointer; user-select: none; list-style: none; }
+.section-fold > summary::-webkit-details-marker { display: none; }
+.section-fold .fold-arrow {
+  color: var(--ink-3);
+  font-size: 15px;
+  margin-top: 4px;
+  transition: transform 150ms ease;
+  flex: none;
+}
+.section-fold[open] > summary .fold-arrow { transform: rotate(90deg); }
+.section-fold .fold-hint { font-size: 12px; color: var(--ink-3); }
+.section-fold[open] > summary .fold-hint { display: none; }
+.section-fold > summary:hover h2 { text-decoration: underline; text-underline-offset: 4px; }
