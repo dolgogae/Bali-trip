@@ -25,7 +25,7 @@
 
     const bases = [
       { number: "1", name: "Kima Surf Camp", area: "Seminyak · 20—25 AUG", coords: [-8.6907, 115.1624] },
-      { number: "2", name: "Canggu 2nd Base", area: "Canggu · 25—27 AUG", coords: [-8.6482, 115.1400] },
+      { number: "2", name: "Aviator Bali", area: "Berawa · Canggu · 25—27 AUG", coords: [-8.6615, 115.1422] },
       { number: "3", name: "Mantra Wellness Center", area: "Uluwatu · 27—29 AUG", coords: [-8.8155, 115.1080] }
     ];
     const spots = [
