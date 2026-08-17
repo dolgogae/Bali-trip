@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&amp;family=Gowun+Dodum&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="css/itinerary.css" />
 </head>
 <body>
@@ -22,6 +23,7 @@
       </a>
       <div class="topbar-links">
         <a href="#schedule">일정</a>
+        <a href="#route-map">지도</a>
         <a href="#stays">숙소</a>
         <a href="#beach-clubs">비치클럽</a>
         <a class="report-link" href="index.html">리포트 ↗</a>
@@ -65,8 +67,8 @@
     <section class="schedule-section wrap" id="schedule" aria-labelledby="schedule-title">
       <div class="section-head">
         <div>
-          <p class="section-index">02 · DAY BY DAY</p>
-          <h2 id="schedule-title">날짜별 일정</h2>
+          <p class="section-index">02 · 10 DAYS AT A GLANCE</p>
+          <h2 id="schedule-title">한눈에 보는 일정</h2>
         </div>
         <div class="schedule-actions">
           <div class="filters" aria-label="일정 필터">
@@ -203,11 +205,72 @@
       <p class="filter-empty" id="filter-empty" hidden>선택한 유형의 일정이 없습니다.</p>
     </section>
 
+    <section class="route-map-section" id="route-map" aria-labelledby="route-map-title">
+      <div class="wrap">
+        <div class="section-head inverse map-section-head">
+          <div>
+            <p class="section-index">03 · ROUGH ROUTE MAP</p>
+            <h2 id="route-map-title">발리에서 여기쯤</h2>
+          </div>
+          <p>큰 번호는 숙소 베이스, 작은 점은 확정된 운동·비치클럽 장소입니다. 정확한 이동 경로가 아닌 위치 감각을 위한 지도예요.</p>
+        </div>
+
+        <div class="map-shell">
+          <div class="map-corner-label" aria-hidden="true"><span>SW BALI</span><strong>3 BASE ROUTE</strong></div>
+          <div id="trip-map" role="img" aria-label="공항에서 스미냑, 짱구, 울루와뚜로 이어지는 발리 여행 경로 지도">
+            <svg class="map-fallback" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect class="fallback-sea" width="1000" height="500"></rect>
+              <path class="fallback-land" d="M-40 55C112 20 270 35 425 65C586 96 752 54 1040 8L1040 252C912 239 813 235 753 251C727 258 712 275 709 298C763 323 812 356 819 404C781 468 659 494 568 452C526 420 534 362 591 315C503 338 418 332 328 304C231 275 128 268-40 298Z"></path>
+              <path class="fallback-coast" d="M-40 298C128 268 231 275 328 304C418 332 503 338 591 315C534 362 526 420 568 452C659 494 781 468 819 404C812 356 763 323 709 298C712 275 727 258 753 251C813 235 912 239 1040 252"></path>
+              <text class="fallback-water-label" x="72" y="424">INDIAN OCEAN</text>
+              <text class="fallback-island-label" x="735" y="116">BALI</text>
+              <path class="fallback-route" d="M676 324L522 305L395 282L593 422L676 324"></path>
+
+              <g class="fallback-spot-cluster">
+                <circle cx="367" cy="276" r="5"></circle>
+                <circle cx="388" cy="267" r="5"></circle>
+                <circle cx="411" cy="286" r="5"></circle>
+                <circle class="fallback-beach-spot" cx="382" cy="300" r="5"></circle>
+                <text x="332" y="244">운동 장소</text>
+              </g>
+
+              <g class="fallback-base" transform="translate(522 305)">
+                <circle r="18"></circle><text y="5">1</text>
+                <text class="fallback-place" x="27" y="-7">스미냑</text>
+                <text class="fallback-detail" x="27" y="9">KIMA SURF CAMP</text>
+              </g>
+              <g class="fallback-base" transform="translate(395 282)">
+                <circle r="18"></circle><text y="5">2</text>
+                <text class="fallback-place" x="-28" y="-30">짱구</text>
+                <text class="fallback-detail" x="-53" y="-17">2ND BASE</text>
+              </g>
+              <g class="fallback-base" transform="translate(593 422)">
+                <circle r="18"></circle><text y="5">3</text>
+                <text class="fallback-place" x="27" y="-7">울루와뚜</text>
+                <text class="fallback-detail" x="27" y="9">MANTRA WELLNESS</text>
+              </g>
+              <g class="fallback-airport" transform="translate(676 324)">
+                <circle r="8"></circle>
+                <text x="14" y="4">NGURAH RAI AIRPORT</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="map-legend" aria-label="지도 범례">
+          <span><i class="legend-base">1</i>숙소 베이스</span>
+          <span><i class="legend-spot workout-dot"></i>운동 장소</span>
+          <span><i class="legend-spot beach-dot"></i>비치클럽</span>
+          <span><i class="legend-spot airport-dot"></i>공항</span>
+        </div>
+      </div>
+    </section>
+
     <section class="stays-section" id="stays" aria-labelledby="stays-title">
       <div class="wrap">
         <div class="section-head inverse">
           <div>
-            <p class="section-index">03 · THREE BASES</p>
+            <p class="section-index">04 · THREE BASES</p>
             <h2 id="stays-title">숙소 이동</h2>
           </div>
           <p>서쪽 해안에서 시작해 남쪽 절벽으로 내려가는 세 구간.</p>
@@ -242,7 +305,7 @@
     <section class="clubs-section wrap" id="beach-clubs" aria-labelledby="clubs-title">
       <div class="section-head">
         <div>
-          <p class="section-index">04 · BEACH CLUB INDEX</p>
+          <p class="section-index">05 · BEACH CLUB INDEX</p>
           <h2 id="clubs-title">그날 기분대로 고르기</h2>
         </div>
         <p>일정에는 FINNS와 Savaya만 표시하고, 나머지는 매일 선택할 수 있는 후보로 남겨둔다.</p>
@@ -280,7 +343,7 @@
     <section class="gym-strip" aria-labelledby="gym-title">
       <div class="wrap gym-layout">
         <div>
-          <p class="section-index">05 · GYM ROSTER</p>
+          <p class="section-index">06 · GYM ROSTER</p>
           <h2 id="gym-title">대화에 나온 짐</h2>
         </div>
         <div class="gym-list">
@@ -303,6 +366,7 @@
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="js/itinerary.js"></script>
 </body>
 </html>

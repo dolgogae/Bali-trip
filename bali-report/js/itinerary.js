@@ -9,6 +9,81 @@
   const toast = document.getElementById("toast");
   let toastTimer;
 
+  const mapNode = document.getElementById("trip-map");
+  if (mapNode && window.L) {
+    const map = window.L.map(mapNode, {
+      zoomControl: false,
+      scrollWheelZoom: false,
+      attributionControl: true
+    });
+
+    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+    window.L.control.zoom({ position: "bottomright" }).addTo(map);
+
+    const bases = [
+      { number: "1", name: "Kima Surf Camp", area: "Seminyak · 20—25 AUG", coords: [-8.6907, 115.1624] },
+      { number: "2", name: "Canggu 2nd Base", area: "Canggu · 25—27 AUG", coords: [-8.6482, 115.1400] },
+      { number: "3", name: "Mantra Wellness Center", area: "Uluwatu · 27—29 AUG", coords: [-8.8155, 115.1080] }
+    ];
+    const spots = [
+      { name: "Ngurah Rai Airport", type: "AIRPORT", kind: "airport", coords: [-8.7482, 115.1672] },
+      { name: "BYND Fitness Club", type: "WORKOUT · SAT", kind: "workout", coords: [-8.6342, 115.1443] },
+      { name: "Body Factory Bali", type: "WORKOUT · SUN", kind: "workout", coords: [-8.6560, 115.1349] },
+      { name: "FINNS Beach Club", type: "BEACH · SUN", kind: "beach", coords: [-8.6668, 115.1394] },
+      { name: "Wanderlust Fitness Village", type: "WORKOUT · TUE", kind: "workout", coords: [-8.6417, 115.1563] },
+      { name: "Pucuk Bali Gym", type: "WORKOUT · WED", kind: "workout", coords: [-8.6512, 115.1354] },
+      { name: "Savaya Bali", type: "OPTION · FRI", kind: "beach", coords: [-8.8453, 115.1606] }
+    ];
+
+    function popup(type, name, detail) {
+      return `<div class="map-popup"><span>${type}</span><strong>${name}</strong><small>${detail}</small></div>`;
+    }
+    function baseIcon(number) {
+      return window.L.divIcon({
+        className: "route-pin-wrap",
+        html: `<span class="route-pin"><span>${number}</span></span>`,
+        iconSize: [34, 34],
+        iconAnchor: [17, 30],
+        popupAnchor: [0, -28]
+      });
+    }
+    function spotIcon(kind) {
+      return window.L.divIcon({
+        className: "spot-pin-wrap",
+        html: `<span class="spot-pin ${kind}"></span>`,
+        iconSize: [15, 15],
+        iconAnchor: [8, 8],
+        popupAnchor: [0, -9]
+      });
+    }
+
+    bases.forEach((base) => {
+      window.L.marker(base.coords, { icon: baseIcon(base.number), zIndexOffset: 1000 })
+        .addTo(map)
+        .bindPopup(popup(`BASE ${base.number}`, base.name, base.area));
+    });
+    spots.forEach((spot) => {
+      window.L.marker(spot.coords, { icon: spotIcon(spot.kind) })
+        .addTo(map)
+        .bindPopup(popup(spot.type, spot.name, "대략적인 위치"));
+    });
+
+    const route = [spots[0].coords, ...bases.map((base) => base.coords), spots[0].coords];
+    window.L.polyline(route, {
+      color: "#f06442",
+      weight: 3,
+      opacity: 0.9,
+      dashArray: "7 9",
+      lineCap: "round"
+    }).addTo(map);
+    map.fitBounds(window.L.latLngBounds([...bases, ...spots].map((place) => place.coords)), {
+      padding: [42, 42]
+    });
+  }
+
   function showToast(message) {
     window.clearTimeout(toastTimer);
     toast.textContent = message;
