@@ -35,7 +35,8 @@
       { name: "FINNS Beach Club", type: "BEACH · SUN", kind: "beach", coords: [-8.6668, 115.1394] },
       { name: "Wanderlust Fitness Village", type: "WORKOUT · TUE", kind: "workout", coords: [-8.6417, 115.1563] },
       { name: "Pucuk Bali Gym", type: "WORKOUT · WED", kind: "workout", coords: [-8.6512, 115.1354] },
-      { name: "Savaya Bali", type: "OPTION · FRI", kind: "beach", coords: [-8.8453, 115.1606] }
+      { name: "Savaya Bali", type: "OPTION · FRI", kind: "beach", coords: [-8.8453, 115.1606] },
+      { name: "Bambu Fitness Bali", type: "WORKOUT · SAT", kind: "workout", coords: [-8.8126, 115.1194] }
     ];
 
     function popup(type, name, detail) {
@@ -71,7 +72,9 @@
         .bindPopup(popup(spot.type, spot.name, "대략적인 위치"));
     });
 
-    const route = [spots[0].coords, ...bases.map((base) => base.coords), spots[0].coords];
+    const airport = spots.find((spot) => spot.kind === "airport");
+    const lastStop = spots.find((spot) => spot.name === "Bambu Fitness Bali");
+    const route = [airport.coords, ...bases.map((base) => base.coords), lastStop.coords, airport.coords];
     window.L.polyline(route, {
       color: "#f06442",
       weight: 3,

@@ -338,6 +338,8 @@ h2 {
 .fallback-base > text:not(.fallback-place):not(.fallback-detail) { fill: var(--forest-deep); font-size: 12px; font-weight: 700; text-anchor: middle; }
 .fallback-base .fallback-place { fill: var(--forest-deep); font-family: var(--serif); font-size: 16px; }
 .fallback-base .fallback-detail { fill: var(--ink-soft); font-size: 7px; letter-spacing: 0.12em; }
+.fallback-last-stop circle { fill: var(--forest); stroke: var(--paper-light); stroke-width: 2; }
+.fallback-last-stop text { fill: var(--forest-deep); font-size: 7px; font-weight: 700; letter-spacing: 0.08em; }
 .fallback-airport circle { fill: var(--sand); stroke: var(--paper-light); stroke-width: 3; }
 .fallback-airport text { fill: var(--ink-soft); font-size: 7px; letter-spacing: 0.1em; }
 .leaflet-map-pane { z-index: 2; }
