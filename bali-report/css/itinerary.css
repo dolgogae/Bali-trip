@@ -460,6 +460,58 @@ h2 {
 .uluwatu-clubs a span { color: var(--lime); }
 .club-list a i { font-style: normal; opacity: 0.46; }
 
+/* CrossFit booking desk */
+.box-booking-section {
+  padding-block: 112px 128px;
+  background:
+    linear-gradient(90deg, transparent 49.9%, rgba(21, 54, 49, 0.06) 50%, transparent 50.1%),
+    var(--paper-light);
+  border-top: 1px solid var(--line);
+}
+.booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.booking-card {
+  position: relative;
+  min-height: 600px;
+  padding: 32px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 3px 42px 3px 3px;
+}
+.booking-card::after {
+  content: "";
+  position: absolute;
+  right: -65px;
+  top: -65px;
+  width: 160px;
+  height: 160px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.13;
+}
+.booking-card-bynd { color: var(--paper-light); background: var(--forest); border-color: var(--forest); }
+.booking-card-wanderlust { margin-top: 28px; color: var(--forest-deep); background: #d9e9e3; border-color: #b7d1c8; }
+.booking-card-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.booking-card-head span, .booking-card-head strong { font-size: 9px; letter-spacing: 0.14em; }
+.booking-card-head span { color: var(--sun); }
+.booking-card-head strong { padding: 6px 9px; color: var(--forest-deep); background: var(--lime); border-radius: 999px; }
+.booking-card h3 { margin: 30px 0 26px; font-family: var(--serif); font-size: clamp(35px, 4vw, 52px); font-weight: 400; line-height: 1.04; }
+.box-price-list { display: grid; grid-template-columns: 1fr 1fr; border-block: 1px solid currentColor; }
+.box-price-list p { min-width: 0; margin: 0; padding: 16px 12px 16px 0; }
+.box-price-list p + p { padding-left: 18px; border-left: 1px solid currentColor; }
+.box-price-list span, .box-price-list small { display: block; font-size: 8px; letter-spacing: 0.1em; opacity: 0.65; }
+.box-price-list strong { display: block; margin-block: 3px; font-family: var(--serif); font-size: clamp(21px, 2.4vw, 30px); font-weight: 400; line-height: 1.2; }
+.booking-steps { margin: 24px 0 0; }
+.booking-steps div { display: grid; grid-template-columns: 52px 1fr; gap: 14px; padding-block: 12px; border-bottom: 1px solid currentColor; }
+.booking-steps dt { color: var(--sun); font-size: 9px; font-weight: 700; letter-spacing: 0.12em; }
+.booking-steps dd { margin: 0; font-size: 12px; opacity: 0.76; }
+.booking-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.booking-actions a { padding: 9px 12px; color: var(--forest-deep); background: var(--lime); border-radius: 999px; font-size: 10px; font-weight: 700; text-decoration: none; letter-spacing: 0.06em; transition: transform 150ms ease, background 150ms ease; }
+.booking-actions a:hover { background: #dceca8; transform: translateY(-2px); }
+.booking-card-wanderlust .booking-actions a { color: #fff; background: var(--forest); }
+.booking-card-wanderlust .booking-actions a:hover { background: var(--sea); }
+.booking-footnote { display: flex; gap: 24px; max-width: 910px; margin: 66px auto 0; padding-top: 18px; color: var(--ink-soft); border-top: 1px solid var(--line); font-size: 11px; }
+.booking-footnote strong { flex: 0 0 auto; color: var(--sun); font-size: 9px; letter-spacing: 0.13em; }
+
 .gym-strip { padding-block: 92px; color: var(--paper-light); background: var(--sun); }
 .gym-strip .section-index { color: var(--forest-deep); }
 .gym-layout { display: grid; grid-template-columns: 0.8fr 2fr; gap: 80px; align-items: start; }
@@ -491,6 +543,8 @@ footer { padding-block: 55px; color: rgba(255, 255, 255, 0.64); background: var(
   .stay-grid { grid-template-columns: 1fr; }
   .stay-card { min-height: 320px; border-right: 0; border-bottom: 1px solid var(--white-line); }
   .stay-card:last-child { border-bottom: 0; }
+  .booking-grid { grid-template-columns: 1fr; }
+  .booking-card-wanderlust { margin-top: 0; }
   .gym-layout { grid-template-columns: 1fr; gap: 38px; }
 }
 
@@ -514,7 +568,7 @@ footer { padding-block: 55px; color: rgba(255, 255, 255, 0.64); background: var(
   .hero-meta span { font-size: 7px; }
   .hero-orbit { top: 130px; right: -365px; }
   .intro { grid-template-columns: 1fr; padding-block: 80px 70px; }
-  .schedule-section, .clubs-section { padding-block: 68px 84px; }
+  .schedule-section, .clubs-section, .box-booking-section { padding-block: 68px 84px; }
   .schedule-actions { width: 100%; }
   .filters { order: 2; width: 100%; margin: 4px 0 0; overflow-x: auto; padding-bottom: 4px; }
   .filter { white-space: nowrap; }
@@ -535,6 +589,12 @@ footer { padding-block: 55px; color: rgba(255, 255, 255, 0.64); background: var(
   .club-list { padding: 25px 20px; }
   .club-heading { align-items: start; flex-direction: column; }
   .club-heading h3 { margin-top: 4px; }
+  .booking-card { min-height: 0; padding: 25px 20px; }
+  .booking-card-head { align-items: start; flex-direction: column; gap: 8px; }
+  .box-price-list { grid-template-columns: 1fr; }
+  .box-price-list p + p { padding-left: 0; border-top: 1px solid currentColor; border-left: 0; }
+  .booking-footnote { display: block; margin-top: 36px; }
+  .booking-footnote strong { display: block; margin-bottom: 8px; }
   .gym-list { grid-template-columns: 1fr; }
   .gym-list a:nth-child(odd) { border-right: 0; }
   .footer-inner { grid-template-columns: 1fr; gap: 20px; align-items: start; }
@@ -564,4 +624,6 @@ footer { padding-block: 55px; color: rgba(255, 255, 255, 0.64); background: var(
   .stay-grid, .stay-card { border-color: var(--line); }
   .stay-card > p:not(.stay-date) { color: var(--ink-soft); }
   .stay-card h3 { color: var(--ink); }
+  .box-booking-section { break-before: page; color: var(--ink); background: #fff; }
+  .booking-card { min-height: 0; color: var(--ink) !important; background: #fff !important; border-color: var(--line); }
 }
