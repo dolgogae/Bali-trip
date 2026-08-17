@@ -282,12 +282,9 @@ h2 {
 }
 .day-card::after { content: ""; position: absolute; right: -42px; bottom: -49px; width: 115px; height: 115px; border: 1px solid var(--line); border-radius: 50%; }
 .day-card:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(23, 52, 47, 0.08); }
-.day-card.feature-day { background: var(--forest); color: var(--paper-light); border-color: var(--forest); }
-.day-card.feature-day::after { border-color: var(--white-line); }
 .day-topline { display: flex; flex-direction: column; gap: 2px; font-size: 7px; font-weight: 700; letter-spacing: 0.12em; line-height: 1.45; }
 .day-topline .area { color: var(--sun); }
 .day-topline .stay { color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.feature-day .day-topline .stay { color: rgba(255, 255, 255, 0.5); }
 .day-card h3 {
   min-height: 2.35em;
   margin: 8px 0 10px;
@@ -298,19 +295,14 @@ h2 {
 }
 .events { display: grid; grid-template-columns: 1fr; gap: 7px; }
 .event { display: block; padding-top: 6px; border-top: 1px solid var(--line); }
-.feature-day .event { border-top-color: var(--white-line); }
 .event p { margin: 1px 0 0; color: var(--ink-soft); font-size: 10.5px; line-height: 1.4; }
 .event-time { margin-right: 5px; color: var(--ink); font-size: 9px; font-weight: 700; letter-spacing: -0.01em; }
-.feature-day .event p { color: rgba(255, 255, 255, 0.76); }
-.feature-day .event-time { color: var(--lime); }
 .event a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 .event-type { display: block; font-size: 7px; font-weight: 700; letter-spacing: 0.13em; line-height: 1.2; }
 .event-type.workout { color: var(--sea); }
 .event-type.beach { color: var(--sun); }
 .event-type.move { color: #8b6334; }
 .event-type.free { color: var(--ink-soft); }
-.feature-day .event-type.workout { color: var(--lime); }
-.feature-day .event-type.free { color: var(--sea-light); }
 .filter-empty { padding: 32px; text-align: center; border: 1px dashed var(--line); }
 
 /* Route map — geographic context without competing with the schedule board. */
@@ -344,7 +336,6 @@ h2 {
 .fallback-island-label { fill: #9caa91; font-family: var(--serif); font-size: 52px; letter-spacing: 0.08em; opacity: 0.48; }
 .fallback-route { fill: none; stroke: var(--sun); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 8 9; }
 .fallback-spot-cluster circle { fill: var(--forest); stroke: var(--paper-light); stroke-width: 2; }
-.fallback-spot-cluster .fallback-beach-spot { fill: var(--sun); }
 .fallback-spot-cluster text { fill: var(--ink-soft); font-size: 9px; letter-spacing: 0.08em; }
 .fallback-base > circle { fill: var(--sun); stroke: var(--paper-light); stroke-width: 4; }
 .fallback-base > text:not(.fallback-place):not(.fallback-detail) { fill: var(--forest-deep); font-size: 12px; font-weight: 700; text-anchor: middle; }
@@ -396,7 +387,6 @@ h2 {
 }
 .legend-spot { width: 9px; height: 9px; border: 2px solid var(--paper-light); border-radius: 50%; }
 .workout-dot { background: var(--forest); }
-.beach-dot { background: var(--sun); }
 .airport-dot { background: var(--sand); }
 .leaflet-container { font-family: var(--sans); }
 .leaflet-control-attribution { font-size: 9px; }
@@ -435,7 +425,6 @@ h2 {
   border-radius: 50%;
   box-shadow: 0 3px 10px rgba(9, 40, 35, 0.25);
 }
-.spot-pin.beach { background: var(--sun); }
 .spot-pin.airport { background: var(--sand); }
 
 /* Lodging block */
@@ -631,8 +620,6 @@ footer { padding-block: 55px; color: rgba(255, 255, 255, 0.64); background: var(
   .schedule-section { padding-block: 40px; }
   .day { break-inside: avoid; }
   .day-card { box-shadow: none !important; }
-  .day-card.feature-day { color: var(--ink); background: #fff; border-color: var(--line); }
-  .feature-day .event p, .feature-day .day-topline .stay { color: var(--ink-soft); }
   .stays-section { break-before: page; color: var(--ink); background: #fff; }
   .stay-grid, .stay-card { border-color: var(--line); }
   .stay-card > p:not(.stay-date) { color: var(--ink-soft); }

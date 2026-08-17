@@ -32,11 +32,9 @@
       { name: "Ngurah Rai Airport", type: "AIRPORT", kind: "airport", coords: [-8.7482, 115.1672] },
       { name: "BYND Fitness Club", type: "WORKOUT · SAT", kind: "workout", coords: [-8.6342, 115.1443] },
       { name: "Body Factory Bali", type: "WORKOUT · SUN", kind: "workout", coords: [-8.6560, 115.1349] },
-      { name: "FINNS Beach Club", type: "BEACH · SUN", kind: "beach", coords: [-8.6668, 115.1394] },
       { name: "Wanderlust Fitness Village", type: "WORKOUT · TUE", kind: "workout", coords: [-8.6417, 115.1563] },
       { name: "Pucuk Bali Gym", type: "WORKOUT · FRI 07:00", kind: "workout", coords: [-8.6512, 115.1354] },
       { name: "Flowerboy Run Club", type: "RUN CLUB · WED 06:00", kind: "workout", coords: [-8.6410, 115.1124] },
-      { name: "Savaya Bali", type: "OPTION · FRI", kind: "beach", coords: [-8.8453, 115.1606] },
       { name: "Bambu Fitness Bali", type: "WORKOUT · SAT", kind: "workout", coords: [-8.8126, 115.1194] }
     ];
 
